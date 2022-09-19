@@ -65,7 +65,7 @@ public class JSONReader : MonoBehaviour
         PoseList poseList = new();
         poseList.poses = children.ToArray();
         string strOutput = JsonUtility.ToJson(poseList);
-        File.WriteAllText(Application.dataPath + "/json-data.txt", strOutput);
+        File.WriteAllText(Application.dataPath + "/new-json-data.txt", strOutput);
     }
 
     // Update is called once per frame
