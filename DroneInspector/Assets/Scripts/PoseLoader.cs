@@ -5,9 +5,9 @@ using Newtonsoft.Json;
 using System.IO;
 public class PoseLoader : MonoBehaviour
 {
-    List<DronePose> poses = new List<DronePose>();
-    public DronePose posePrefab;
+    public MainManager mainManager;
     public GameObject subject; // the object of interest to the drone
+
     public class PoseJSON
 	{
         public float[] position;
@@ -47,7 +47,7 @@ public class PoseLoader : MonoBehaviour
 	{
         PathJSON path = new PathJSON();
         path.poses = new List<PoseJSON>();
-        poses = new List<DronePose>(GameObject.FindObjectsOfType<DronePose>());
+        List<DronePose> poses = mainManager.GetPoses();
         
         foreach (DronePose dp in poses)
 		{
@@ -70,21 +70,15 @@ public class PoseLoader : MonoBehaviour
     }
 	public void load() 
     {
-        DronePose[] poses = GameObject.FindObjectsOfType<DronePose>();
-        foreach(DronePose dp in poses)
-		{
-            Destroy(dp.gameObject);
-		}
-        this.poses.Clear();
+        mainManager.ClearPoses();
         string json = File.ReadAllText(Application.streamingAssetsPath + "/save.json");
         PathJSON path = JsonConvert.DeserializeObject<PathJSON>(json);
         foreach(PoseJSON pj in path.poses) {
-            DronePose dp =  Instantiate(posePrefab);
-            dp.transform.position = new Vector3(pj.position[0], pj.position[1], pj.position[2]);
-            dp.transform.forward = new Vector3(pj.direction[0], pj.direction[1], pj.direction[2]);
-            dp.name = pj.name;
-            dp.actionType = pj.actionType;
-            this.poses.Add(dp);
+            Vector3 pos = new(pj.position[0], pj.position[1], pj.position[2]);
+            Vector3 fwd = new(pj.direction[0], pj.direction[1], pj.direction[2]);
+            string name = pj.name;
+            string action = pj.actionType;
+            mainManager.AddPose(pos, fwd, name, action);
         }
     }
 }
