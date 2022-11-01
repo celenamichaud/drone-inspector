@@ -6,7 +6,6 @@ using System.IO;
 public class PoseLoader : MonoBehaviour
 {
     public MainManager mainManager;
-    public GameObject subject; // the object of interest to the drone
 
     public class PoseJSON
 	{
