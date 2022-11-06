@@ -12,7 +12,7 @@ Shader "Custom/XRayShader"
         Tags { "RenderType"="Opaque" }
         LOD 200
 
-        // I don't know maybe this goes on things you want the drone to show through
+        // this goes on things you want the drone to show up in front of
         Stencil
 	    {
 		    Ref 3

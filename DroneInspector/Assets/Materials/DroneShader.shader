@@ -12,7 +12,7 @@ Shader "Custom/DroneShader"
         Tags { "RenderType"="Opaque" }
         LOD 200
 
-        // Write all drone pixels to the stencil buffer at value of 1 (basic pass) -- always in front
+        // Write all drone pixels to the stencil buffer at value of 4
         Stencil
 	    {
 			Ref 4

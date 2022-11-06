@@ -1761,7 +1761,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 596139668f6c0924090830c47fd676d4, type: 2}
+  - {fileID: 2100000, guid: 54087f33bdab3124899e49cce836f612, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5405,6 +5405,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 7866642046815879923, guid: 82b1f5c8d3d8e1c4da89c53319b59236, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7866642046815879923, guid: 82b1f5c8d3d8e1c4da89c53319b59236, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: d3faf0c522660c1468c21a32977f9acd, type: 2}
+    - target: {fileID: 7866642046815879923, guid: 82b1f5c8d3d8e1c4da89c53319b59236, type: 3}
+      propertyPath: m_Materials.Array.data[2]
+      value: 
+      objectReference: {fileID: 2100000, guid: 09f63231ec68f824e810ab8805da5f08, type: 2}
+    - target: {fileID: 7866642046815879923, guid: 82b1f5c8d3d8e1c4da89c53319b59236, type: 3}
+      propertyPath: m_Materials.Array.data[3]
+      value: 
+      objectReference: {fileID: 2100000, guid: 09f63231ec68f824e810ab8805da5f08, type: 2}
     - target: {fileID: 8514918431503639334, guid: 82b1f5c8d3d8e1c4da89c53319b59236, type: 3}
       propertyPath: m_Name
       value: drone
@@ -5415,15 +5431,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9034433743489808796, guid: 82b1f5c8d3d8e1c4da89c53319b59236, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0
+      value: -0.658
       objectReference: {fileID: 0}
     - target: {fileID: 9034433743489808796, guid: 82b1f5c8d3d8e1c4da89c53319b59236, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.226
+      value: 0.945
       objectReference: {fileID: 0}
     - target: {fileID: 9034433743489808796, guid: 82b1f5c8d3d8e1c4da89c53319b59236, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 2.936
+      value: 2.71
       objectReference: {fileID: 0}
     - target: {fileID: 9034433743489808796, guid: 82b1f5c8d3d8e1c4da89c53319b59236, type: 3}
       propertyPath: m_LocalRotation.w
