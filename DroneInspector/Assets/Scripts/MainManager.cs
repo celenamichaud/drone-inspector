@@ -2,14 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 
 public class MainManager : MonoBehaviour
 {
     public GameObject subject; // the object of interest to the drone
     List<DronePose> poses = new List<DronePose>(); // to maintain a list of poses
     public DronePose posePrefab; // to add new poses
-    // public DronePose hiddenPosePrefab; // second rendering of drone
-    public Toggle addToggle;
+    public InputActionReference buttonA = null; // button used to add a pose
+    [SerializeField] Transform player; // used to set location/direction of pose
+
+    private void Awake()
+    {
+        buttonA.action.performed += AddPose;
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -20,44 +26,21 @@ public class MainManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(addToggle.isOn) {
-            // ray casting to add poses in selected location
-            if(Input.GetMouseButtonDown(0))
-            {
-                // note: here is where code would be triggered to launch some small GUI to input new info
-                // for this drone placement
-                if(Input.mousePosition.y / Screen.height > 0.85f)
-                {
-                    return; // mouse click was to turn off add toggle, do not add drone
-                }
-                Vector3 mousePosition = Input.mousePosition;
-                mousePosition.z = 2.0f; // some distance away from the camera
-                // note: could this be a useful way of placing drones in first person view?
-                Vector3 dronePosition = Camera.main.ScreenToWorldPoint(mousePosition);
-                Vector3 droneToSubject = dronePosition - subject.transform.position; // todo: check this
-                string name = "DronePose " + poses.Count; // divide count by 2 if rendering 2 drones for xray visual
-                AddPose(dronePosition, droneToSubject, name);
-            }
-        }
+        
     }
 
-    public void AddPose(Vector3 pos, Vector3 fwd, string name, string action = "Photo")
+    public void AddPose(InputAction.CallbackContext context)
     {
+        // Get current position, forward, name, and use default action
         DronePose dp = Instantiate(posePrefab);
-        dp.transform.position = pos;
-        dp.transform.forward = fwd; // direction
+        Vector3 playerInWorld = player.transform.localToWorldMatrix.MultiplyPoint(player.transform.position);
+        dp.transform.position = playerInWorld;
+        //dp.transform.forward = player.transform.forward; // direction
         dp.transform.parent = subject.transform; // child of subject
-        dp.name = name;
-        dp.actionType = action; // default action = photo
+        dp.name = "DronePose " + poses.Count;
+        dp.actionType = "Photo"; // default action = photo; todo: add UI to choose action
         poses.Add(dp);
-
-        //DronePose hiddenDP = Instantiate(hiddenPosePrefab);
-        //hiddenDP.transform.position = pos;
-        //hiddenDP.transform.forward = fwd;
-        //hiddenDP.transform.parent = dp.transform;
-        //hiddenDP.name = "Hidden" + name;
-        //hiddenDP.actionType = action;
-        //poses.Add(hiddenDP);
+        // todo: adjust spawn location of target position
     }
 
     public List<DronePose> GetPoses()

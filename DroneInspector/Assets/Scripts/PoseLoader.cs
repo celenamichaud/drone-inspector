@@ -77,7 +77,7 @@ public class PoseLoader : MonoBehaviour
             Vector3 fwd = new(pj.direction[0], pj.direction[1], pj.direction[2]);
             string name = pj.name;
             string action = pj.actionType;
-            mainManager.AddPose(pos, fwd, name, action);
+            //mainManager.AddPose(pos, fwd, name, action);
         }
     }
 }
