@@ -33,9 +33,9 @@ public class MainManager : MonoBehaviour
     {
         // Get current position, forward, name, and use default action
         DronePose dp = Instantiate(posePrefab);
-        Vector3 playerInWorld = player.transform.localToWorldMatrix.MultiplyPoint(player.transform.position);
-        dp.transform.position = playerInWorld;
-        //dp.transform.forward = player.transform.forward; // direction
+        //Vector3 playerInWorld = player.transform.localToWorldMatrix.MultiplyPoint(player.transform.position);
+        dp.transform.position = player.transform.position;// + player.transform.forward; // spawn in front of user
+        dp.transform.forward = player.transform.up; // direction
         dp.transform.parent = subject.transform; // child of subject
         dp.name = "DronePose " + poses.Count;
         dp.actionType = "Photo"; // default action = photo; todo: add UI to choose action
