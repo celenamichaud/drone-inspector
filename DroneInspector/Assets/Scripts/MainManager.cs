@@ -11,6 +11,7 @@ public class MainManager : MonoBehaviour
     public DronePose posePrefab; // to add new poses
     public InputActionReference buttonA = null; // button used to add a pose
     [SerializeField] Transform player; // used to set location/direction of pose
+    [SerializeField] GameObject VRRig;
 
     private void Awake()
     {
@@ -26,8 +27,9 @@ public class MainManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
+
 
     public void AddPose(InputAction.CallbackContext context)
     {
@@ -41,6 +43,9 @@ public class MainManager : MonoBehaviour
         dp.actionType = "Photo"; // default action = photo; todo: add UI to choose action
         poses.Add(dp);
         // todo: adjust spawn location of target position
+        // Move VR player to location behind drone when drone is added
+        float newZ = VRRig.transform.position.z + 1.0f;
+        VRRig.transform.position = new Vector3(VRRig.transform.position.x, VRRig.transform.position.y, newZ);
     }
 
     public List<DronePose> GetPoses()
