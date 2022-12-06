@@ -7,7 +7,6 @@ using UnityEngine.InputSystem;
 public class MainManager : MonoBehaviour
 {
     public GameObject subject; // the object of interest to the drone
-    List<DronePose> poses = new List<DronePose>(); // to maintain a list of poses
     public DronePose posePrefab; // to add new poses
     public InputActionReference buttonA = null; // button used to add a pose
     [SerializeField] Transform player; // used to set location/direction of pose
@@ -35,30 +34,32 @@ public class MainManager : MonoBehaviour
     {
         // Get current position, forward, name, and use default action
         DronePose dp = Instantiate(posePrefab);
-        //Vector3 playerInWorld = player.transform.localToWorldMatrix.MultiplyPoint(player.transform.position);
         dp.transform.position = player.transform.position;// + player.transform.forward; // spawn in front of user
         dp.transform.forward = player.transform.up; // direction
         dp.transform.parent = subject.transform; // child of subject
-        dp.name = "DronePose " + poses.Count;
+        dp.name = "DronePose " + GetPoses().Count;
         dp.actionType = "Photo"; // default action = photo; todo: add UI to choose action
-        poses.Add(dp);
-        // todo: adjust spawn location of target position
         // Move VR player to location behind drone when drone is added
-        float newZ = VRRig.transform.position.z + 1.0f;
-        VRRig.transform.position = new Vector3(VRRig.transform.position.x, VRRig.transform.position.y, newZ);
+        Vector3 newPosition = player.transform.forward.normalized;
+        float newX = VRRig.transform.position.x - newPosition.x;
+        float newY = VRRig.transform.position.y - newPosition.y;
+        float newZ = VRRig.transform.position.z - newPosition.z;
+        
+        VRRig.transform.position = new Vector3(newX, newY, newZ);
     }
+
 
     public List<DronePose> GetPoses()
     {
-        return poses;
+        List<DronePose> ps = new List<DronePose>(FindObjectsOfType<DronePose>());
+        return ps;
     }
 
     public void ClearPoses()
     {
-        foreach (DronePose dp in poses)
+        foreach (DronePose dp in GetPoses())
         {
             Destroy(dp.gameObject);
         }
-        poses.Clear();
     }
 }
